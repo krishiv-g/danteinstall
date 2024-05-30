@@ -84,3 +84,46 @@ To enhance security, restrict access by IP or set up user authentication:
 Dante offers a powerful proxy setup ideal for managing and securing network traffic. Ensure proper security measures and configure according to your network requirements.
 
 For more detailed configuration options and advanced setups, refer to Dante’s official documentation or DigitalOcean community guides.
+
+## Configuring Multiple Dante Instances
+
+For environments requiring Dante to handle traffic on multiple IP addresses, you can automate the setup process using a shell script. This script will configure multiple instances of Dante, each bound to a different IP address found on your server.
+
+### Script Overview
+
+The script performs the following actions:
+- Detects all non-local IP addresses available on the server.
+- Generates a unique Dante configuration file for each IP address.
+- Creates a systemd service file for each Dante instance to allow individual management.
+- Starts and enables each Dante SOCKS server instance.
+
+### How to Use the Script
+
+1. **Prepare the Script**:
+   - Ensure you have the script `setup_dante_instances.sh` on your server. You can download it from the repository or create it using the content provided.
+
+2. **Make the Script Executable**:
+   ```bash
+   chmod +x setup_dante_instances.sh
+   ```
+
+3. **Run the Script**:
+   Execute the script with root privileges:
+   ```bash
+   sudo ./setup_dante_instances.sh
+   ```
+
+4. **Verify Each Instance**:
+   Check the status of each Dante instance to ensure they are running correctly:
+   ```bash
+   systemctl status danted_*.service
+   ```
+
+5. **Testing**:
+   Use a SOCKS client to connect through the ports configured by the script to verify that each instance is functioning correctly.
+
+This script simplifies the deployment of multiple Dante SOCKS server instances on a server, making it ideal for complex network environments or systems with multiple network interfaces.
+
+## Conclusion
+
+Dante offers a powerful proxy setup ideal for managing and securing network traffic. Ensure proper security measures and configure according to your network requirements. For more detailed configuration options and advanced setups, refer to Dante’s official documentation or community guides such as those available on DigitalOcean.
